@@ -17,4 +17,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("upload.php")
     Call<ImageClass> uploadImage(@Field("title") String title, @Field("image") String image);
-}
+
+    //call is the return type of uploadImage
+        }

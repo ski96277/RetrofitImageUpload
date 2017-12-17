@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//Initialization
+
         image_title = findViewById(R.id.imageTitle);
         choose_btn = findViewById(R.id.chooseBtn);
         upload_btn = findViewById(R.id.uploadBtn);
@@ -55,35 +57,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-private void uploadImage(){
-        String image=ImageToString();
-        String title= image_title.getText().toString();
-        ApiInterface apiInterface=ApiClient.getApiClient().create(ApiInterface.class);
 
-    Call<ImageClass> call=apiInterface.uploadImage(title,image);
-    call.enqueue(new Callback<ImageClass>() {
-        @Override
-        public void onResponse(Call<ImageClass> call, Response<ImageClass> response) {
+    private void uploadImage() {
+        String image = ImageToString();
+        String title = image_title.getText().toString();
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-            ImageClass imageClass=response.body();
-            Toast.makeText(MainActivity.this,"Responce From Server"+imageClass.getResponse(),Toast.LENGTH_LONG).show();
+        Call<ImageClass> call = apiInterface.uploadImage(title, image);
+        call.enqueue(new Callback<ImageClass>() {
+            @Override
+            public void onResponse(Call<ImageClass> call, Response<ImageClass> response) {
+
+                ImageClass imageClass = response.body();
+                Toast.makeText(MainActivity.this, "Responce From Server" + imageClass.getResponse(),
+                        Toast.LENGTH_LONG).show();
 
 
-            img.setVisibility(View.GONE);
-            image_title.setVisibility(View.GONE);
-            choose_btn.setEnabled(true);
-            upload_btn.setEnabled(false);
-            image_title.setText("");
+                img.setVisibility(View.GONE);
+                image_title.setVisibility(View.GONE);
+                choose_btn.setEnabled(true);
+                upload_btn.setEnabled(false);
+                image_title.setText("");
 
-        }
+            }
 
-        @Override
-        public void onFailure(Call<ImageClass> call, Throwable t) {
+            @Override
+            public void onFailure(Call<ImageClass> call, Throwable t) {
 
-        }
-    });
+            }
+        });
 
-}
+    }
 
     private void SelectImage() {
         Intent intent = new Intent();
